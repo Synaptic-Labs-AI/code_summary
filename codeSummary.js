@@ -127,6 +127,17 @@ function buildDirectoryTree(dirPath, prefix = '') {
   return tree;
 }
 
+// Function to display a loading spinner
+function displayLoading(message) {
+  const spinner = ['|', '/', '-', '\\'];
+  let i = 0;
+  const loadingInterval = setInterval(() => {
+    process.stdout.write(`\r${message} ${spinner[i++]}`);
+    i %= spinner.length;
+  }, 250);
+  return loadingInterval;
+}
+
 // Function to generate directory tree
 function mainGenerate() {
   console.log('=== Directory Tree Generation Started ===');
@@ -192,7 +203,7 @@ async function sendToOpenRouter(prompt) {
     const response = await axios.post(
       OPENROUTER_API_URL,
       {
-        model: 'google/gemini-pro-1.5-exp', // Using the specified model
+        model: 'google/gemini-pro-1.5', // Using the specified model
         messages: [
           {
             role: 'user',
@@ -210,6 +221,11 @@ async function sendToOpenRouter(prompt) {
       }
     );
 
+    // Log response status and data for debugging
+    console.log('Received response from OpenRouter API.');
+    console.log(`Status Code: ${response.status}`);
+    console.log('Response Data:', response.data);
+
     if (response.data && response.data.choices && response.data.choices.length > 0) {
       return response.data.choices[0].message.content.trim();
     } else {
@@ -217,7 +233,13 @@ async function sendToOpenRouter(prompt) {
       return '';
     }
   } catch (error) {
-    console.error('Error: Communication with OpenRouter API failed.', error.response ? error.response.data : error.message);
+    console.error('Error: Communication with OpenRouter API failed.');
+    if (error.response) {
+      console.error('Status Code:', error.response.status);
+      console.error('Response Data:', error.response.data);
+    } else {
+      console.error('Error Message:', error.message);
+    }
     return '';
   }
 }
@@ -301,12 +323,22 @@ ${Object.entries(fileData).map(([file, content]) => `#### ${file}\n\`\`\`${path.
 
   console.log('Sending data to OpenRouter for analysis. This may take some time depending on the size of the codebase...');
 
+  // Display loading spinner
+  const loadingMessage = 'Analyzing codebase';
+  const loadingInterval = displayLoading(loadingMessage);
+
   // Send prompt to OpenRouter
   const analysis = await sendToOpenRouter(prompt);
 
+  // Stop loading spinner
+  clearInterval(loadingInterval);
+  process.stdout.write('\r'); // Clear the loading line
+
   if (analysis) {
     try {
-      fs.writeFileSync(outputPath, analysis, 'utf8');
+      // Prepend directory tree to analysis
+      const finalAnalysis = `### Directory Structure:\n${directoryTree.trim()}\n\n${analysis}`;
+      fs.writeFileSync(outputPath, finalAnalysis, 'utf8');
       console.log(`Success: Analysis has been saved to ${outputFileName}`);
     } catch (err) {
       console.error('Error: Failed to write analysis to file.', err);
