@@ -192,7 +192,7 @@ async function sendToOpenRouter(prompt) {
     const response = await axios.post(
       OPENROUTER_API_URL,
       {
-        model: 'openai/o1-mini', // Using the specified model
+        model: 'google/gemini-pro-1.5-exp', // Using the specified model
         messages: [
           {
             role: 'user',
