@@ -19,7 +19,9 @@ const EXCLUDE = [
   '*.log',          // Exclude all .log files
   '*.tmp',          // Exclude all .tmp files
   'package-lock.json',
-  'yarn.lock'
+  'yarn.lock',
+  'codeSummary.js',
+  '.env'
 ];
 
 // OpenRouter API configuration
