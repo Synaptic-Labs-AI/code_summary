@@ -40,6 +40,7 @@ const excludedFiles = [
   'main.js',
   outputFile,
   'codeSummary.cjs',
+  'codeSummary.js',
   'package-lock.json',
   'yarn.lock',
   '.env',
