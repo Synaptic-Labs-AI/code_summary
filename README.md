@@ -22,7 +22,7 @@ Before running this project, ensure that you have the following installed:
 
 ## Installation
 
-1. Clone or download the code repository.
+1. Clone or download the code file.
 2. Open the project folder in your preferred editor (VS Code or Xcode).
 
 ### For VS Code:
@@ -72,7 +72,7 @@ To generate a text-based directory structure of your project:
 2. Run the following command:
 
 ```bash
-node index.js --generate
+node codeSummary.js --generate
 ```
 
 This will create a `.txt` file in your project folder containing the directory tree.
@@ -85,7 +85,7 @@ To analyze the codebase and send the results to the OpenRouter API:
 2. Run the following command:
 
 ```bash
-node index.js --analyze
+node codeSummary.js
 ```
 
 This will analyze your codebase by sending file contents to the OpenRouter API. A detailed report will be generated and saved as a `.txt` file in your project folder.
@@ -94,13 +94,8 @@ This will analyze your codebase by sending file contents to the OpenRouter API. 
 
 - **Error: OPENROUTER_API_KEY is not set in the .env file.**
   - Make sure you have created a `.env` file in the root directory of the project and added the `OPENROUTER_API_KEY` variable with a valid API key.
-  
-- **Permission Denied Error (Mac/Linux users)**
-  - If you encounter a permissions error, try running the script with `sudo`:
-  
-    ```bash
-    sudo node index.js --generate
-    ```
+- **Wrong file type**
+   - You might need to change the extension of the codesummary file to `.mjs` or `.cjs` depending on your environment.
 
 - **Command Not Found**
   - Ensure that `node` is installed correctly. You can verify this by running `node -v` in the terminal. If Node.js is not installed, download and install it from [here](https://nodejs.org/).
