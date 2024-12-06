@@ -18,7 +18,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { checkbox } from '@inquirer/prompts';
-import minimatch from 'minimatch';
+import { minimatch } from 'minimatch';
 
 // Load environment variables
 dotenv.config();
