@@ -72,7 +72,7 @@ To generate a text-based directory structure of your project:
 2. Run the following command:
 
 ```bash
-node codeSummary.js --generate
+node codeSummary.mjs
 ```
 
 This will create a `.txt` file in your project folder containing the directory tree.
@@ -85,7 +85,7 @@ To analyze the codebase and send the results to the OpenRouter API:
 2. Run the following command:
 
 ```bash
-node codeSummary.js
+node codeSummary.mjs
 ```
 
 This will analyze your codebase by sending file contents to the OpenRouter API. A detailed report will be generated and saved as a `.txt` file in your project folder.
